@@ -34,3 +34,9 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+### Notes
+
+- aria-live="polite" for screen readers, if the content changes here you can announce it to the user, but don’t interrupt what they’re doing. (used on the recent category and results section, so when we update them dynamically later (after a search), users with assistive tech will be notified automatically.)
+- 'use client'; for component change purposes (server by default)
+- Initially only 10 results because SWAPI is paginated. Helper function to grab them all.

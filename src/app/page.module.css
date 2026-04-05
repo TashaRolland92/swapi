@@ -1,142 +1,113 @@
 .page {
-  --background: #fafafa;
-  --foreground: #fff;
-
-  --text-primary: #000;
-  --text-secondary: #666;
-
-  --button-primary-hover: #383838;
-  --button-secondary-hover: #f2f2f2;
-  --button-secondary-border: #ebebeb;
-
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-geist-sans);
-  background-color: var(--background);
+	min-height: 100vh;
+	padding: 2rem 1rem;
 }
 
-.main {
-  display: flex;
-  flex: 1;
-  width: 100%;
-  max-width: 800px;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
-  background-color: var(--foreground);
-  padding: 120px 60px;
+.container {
+	max-width: 1100px;
+	margin: 0 auto;
 }
 
-.intro {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  text-align: left;
-  gap: 24px;
+.header {
+	margin-bottom: 2rem;
 }
 
-.intro h1 {
-  max-width: 320px;
-  font-size: 40px;
-  font-weight: 600;
-  line-height: 48px;
-  letter-spacing: -2.4px;
-  text-wrap: balance;
-  color: var(--text-primary);
+.title {
+	font-size: 2rem;
+	margin-bottom: 0.5rem;
 }
 
-.intro p {
-  max-width: 440px;
-  font-size: 18px;
-  line-height: 32px;
-  text-wrap: balance;
-  color: var(--text-secondary);
+.description {
+	color: #c9d1d9;
 }
 
-.intro a {
-  font-weight: 500;
-  color: var(--text-primary);
+.controls {
+	display: grid;
+	gap: 1rem;
+	margin-bottom: 2rem;
+	padding: 1.5rem;
+	background-color: #161b22;
+	border: 1px solid #30363d;
+	border-radius: 12px;
 }
 
-.ctas {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  max-width: 440px;
-  gap: 16px;
-  font-size: 14px;
+.fieldGroup {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
 }
 
-.ctas a {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 40px;
-  padding: 0 16px;
-  border-radius: 128px;
-  border: 1px solid transparent;
-  transition: 0.2s;
-  cursor: pointer;
-  width: fit-content;
-  font-weight: 500;
+.label {
+	font-weight: 600;
 }
 
-a.primary {
-  background: var(--text-primary);
-  color: var(--background);
-  gap: 8px;
+.input,
+.select {
+	padding: 0.75rem 1rem;
+	border: 1px solid #30363d;
+	border-radius: 8px;
+	background-color: #0d1117;
+	color: #f5f5f5;
 }
 
-a.secondary {
-  border-color: var(--button-secondary-border);
+.input:focus,
+.select:focus {
+	outline: 2px solid #58a6ff;
+	outline-offset: 2px;
 }
 
-/* Enable hover only on non-touch devices */
-@media (hover: hover) and (pointer: fine) {
-  a.primary:hover {
-    background: var(--button-primary-hover);
-    border-color: transparent;
-  }
-
-  a.secondary:hover {
-    background: var(--button-secondary-hover);
-    border-color: transparent;
-  }
+.meta {
+	margin-bottom: 1.5rem;
+	color: #c9d1d9;
 }
 
-@media (max-width: 600px) {
-  .main {
-    padding: 48px 24px;
-  }
-
-  .intro {
-    gap: 16px;
-  }
-
-  .intro h1 {
-    font-size: 32px;
-    line-height: 40px;
-    letter-spacing: -1.92px;
-  }
+.results {
+	padding: 1.5rem;
+	background-color: #161b22;
+	border: 1px solid #30363d;
+	border-radius: 12px;
 }
 
-@media (prefers-color-scheme: dark) {
-  .logo {
-    filter: invert();
-  }
+.placeholder {
+	color: #8b949e;
+}
 
-  .page {
-    --background: #000;
-    --foreground: #000;
+.transportItem {
+	padding: 0.5rem;
+	margin-bottom: 1rem;
+	border-bottom: 1px solid #ddd;
+	list-style: none;
+}
 
-    --text-primary: #ededed;
-    --text-secondary: #999;
+.transportItem li {
+	margin: 0.25rem 0;
+}
 
-    --button-primary-hover: #ccc;
-    --button-secondary-hover: #1a1a1a;
-    --button-secondary-border: #1a1a1a;
-  }
+.loadingState {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.75rem;
+	padding: 2rem 0;
+}
+
+.spinner {
+	width: 2rem;
+	height: 2rem;
+	border: 3px solid rgba(255, 255, 255, 0.2);
+	border-top: 3px solid #ffffff;
+	border-radius: 50%;
+	animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+@media (min-width: 768px) {
+	.controls {
+		grid-template-columns: repeat(3, 1fr);
+	}
 }
