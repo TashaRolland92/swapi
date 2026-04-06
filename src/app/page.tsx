@@ -6,10 +6,16 @@ import { useEffect, useState } from 'react';
 type CategoryState = {
     searchTerm: string;
     sort: string;
-    results: any[];
+    results: SwapiItem[];
 };
 
-type TransportItemData = {
+type SwapiItem = {
+    url: string;
+    name?: string;
+    title?: string;
+};
+
+type TransportItemData = SwapiItem & {
     name: string;
     model: string;
     manufacturer: string;
@@ -43,7 +49,7 @@ const fetchAllResults = async (
     category: string,
     searchTerm: string
 ) => {
-    let allResults: any[] = [];
+    let allResults: SwapiItem[] = [];
     let nextUrl = `https://swapi.dev/api/${category}/?search=${searchTerm}`;
 
     while (nextUrl) {
@@ -72,7 +78,7 @@ export default function Home() {
     const [activeSort, setActiveSort] = useState<string>('name');
 
     const [recentCategory, setRecentCategory] = useState<string | null>(null);
-    const [results, setResults] = useState<any[]>([]);
+    const [results, setResults] = useState<SwapiItem[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
 
@@ -117,8 +123,8 @@ export default function Home() {
             }));
 
             setResults(sortedResults);
-        } catch (err: any) {
-            setError(err.message || 'Something went wrong');
+        } catch (err) {
+            setError(err instanceof Error ? err.message : 'Something went wrong');
             setResults([]);
         } finally {
             setLoading(false);
@@ -203,8 +209,9 @@ export default function Home() {
                             className={styles.button} // can reuse input style for simplicity - change later
                             type="button"
                             onClick={handleSearch}
+                            disabled={loading}
                         >
-                            Search
+                            {loading ? 'Searching...' : 'Search'}
                         </button>
                     </div>
                 </section>
@@ -223,28 +230,33 @@ export default function Home() {
                             ) : (
                                 ' (all items)'
                             )}
+                            {' '}sorted by:{' '}
+                            <span className={styles.italic}>
+                                {activeSort === 'name' ? 'A-Z' : 'Z-A'}
+                            </span>
                         </p>
                     )}
                 </section>
 
                 <section className={styles.results} aria-live="polite">
+                    <h2 className={styles.results_heading}>Results</h2>
                     {loading ? (
-                        <div className={styles.loading_state}>
+                        <div className={styles.loading_state} role="status" aria-live="polite">
                             <div className={styles.spinner} aria-hidden="true"></div>
                             <p className={styles.placeholder}>Loading search results...</p>
                         </div>
                     ) : error ? (
-                        <p className={styles.error}>Error: {error}</p>
+                        <p className={styles.error} role="alert">Error: {error}</p>
                     ) : results.length === 0 ? (
                         <p className={styles.result_placeholder}>
                             {hasSearched ? 'No results found for your search.' : 'Results will appear here.'}
                         </p>
                     ) : (
                         <ul className={styles.result_list}>
-                            {results.map((item: any, i) => (
-                                <li key={i} className={styles.result_item}>
+                            {results.map((item) => (
+                                <li key={item.url} className={styles.result_item}>
                                     {activeCategory === 'vehicles' || activeCategory === 'starships' ? (
-                                        <TransportItem item={item} />
+                                        <TransportItem item={item as TransportItemData} />
                                     ) : (
                                         item.name || item.title
                                     )}
