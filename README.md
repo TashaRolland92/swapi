@@ -1,42 +1,103 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SWAPI Search
+
+Star Wars search application built with Next.js, TypeScript, and CSS Modules using the SWAPI API.
+
+Users can search across all available SWAPI categories, sort results by name/title and switch between categories while retaining their previous search and sort state.
+
+## Features
+
+- Search across:
+  - People
+  - Planets
+  - Films
+  - Species
+  - Starships
+  - Vehicles
+
+- View the full list of matching results for each category
+
+- Sort results by:
+  - Name / Title (A-Z)
+  - Name / Title (Z-A)
+
+- Loading state while fetching data
+
+- Error handling for failed requests
+
+- Most recently searched category displayed
+
+- Previous search and sort state retained per category
+
+- Transport categories display:
+  - Name
+  - Model
+  - Manufacturer
+  - Cost in credits
+  - Length
+  - Crew
+  - Passengers
+  - Cargo capacity
+
+- Styled with CSS Modules
+
+- Accessibility tweaked, semantic structure, labels, live components, status/error announcements.
+
+
+## Tech Stack
+
+- Next.js
+- TypeScript
+- React
+- CSS Modules
+- SWAPI (https://swapi.dev)
+
 
 ## Getting Started
 
-First, run the development server:
+Clone the repository and install dependencies:
 
 ```bash
+npm install
+
+## then, run the development server:
+
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Notes
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Full result fetching
 
-## Learn More
+- SWAPI paginates results, so I implemented a helper function to fetch all pages for a category/search combination in order to meet the acceptance criteria of displaying the full result set.
 
-To learn more about Next.js, take a look at the following resources:
+- Per-category search retention
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- ### Each category retains its own:
+    - search term
+    - sort option
+    - results
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+    This allows users to switch between categories without losing their previous search state.
 
-## Deploy on Vercel
+- Accessibility
+- ### Basic WCAG 2.2 A/AA considerations were included, such as:
+    - labelled form controls
+    - keyboard-friendly inputs
+    - loading and error announcements
+    - semantic structure
+    - visible focus states
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## AI Usage
+AI was used as a learning and support tool during development.
 
-### Notes
+It was primarily used for:
+- guidance while learning Next.js
+- TypeScript explanations and improvements
+- debugging support
+- accessibility checks
+- code review / cleanup suggestions
 
-- aria-live="polite" for screen readers, if the content changes here you can announce it to the user, but don’t interrupt what they’re doing. (used on the recent category and results section, so when we update them dynamically later (after a search), users with assistive tech will be notified automatically.)
-- 'use client'; for component change purposes (server by default)
-- Initially only 10 results because SWAPI is paginated. Helper function to grab them all.
+All code was reviewed, implemented and tested manually as part of the build process.
