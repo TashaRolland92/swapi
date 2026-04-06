@@ -25,15 +25,15 @@ type TransportProps = {
 };
 
 const TransportItem = ({ item }: TransportProps) => (
-    <ul className={styles.transportItem}>
-        <li><strong>Name:</strong> {item.name}</li>
-        <li><strong>Model:</strong> {item.model}</li>
-        <li><strong>Manufacturer:</strong> {item.manufacturer}</li>
-        <li><strong>Cost:</strong> {item.cost_in_credits}</li>
-        <li><strong>Length:</strong> {item.length}</li>
-        <li><strong>Crew:</strong> {item.crew}</li>
-        <li><strong>Passengers:</strong> {item.passengers}</li>
-        <li><strong>Cargo capacity:</strong> {item.cargo_capacity}</li>
+    <ul className={styles.transport_item}>
+        <li><span className={styles.bold}>Name:</span> {item.name}</li>
+        <li><span className={styles.bold}>Model:</span> {item.model}</li>
+        <li><span className={styles.bold}>Manufacturer:</span> {item.manufacturer}</li>
+        <li><span className={styles.bold}>Cost:</span> {item.cost_in_credits}</li>
+        <li><span className={styles.bold}>Length:</span> {item.length}</li>
+        <li><span className={styles.bold}>Crew:</span> {item.crew}</li>
+        <li><span className={styles.bold}>Passengers:</span> {item.passengers}</li>
+        <li><span className={styles.bold}>Cargo capacity:</span> {item.cargo_capacity}</li>
     </ul>
 );
 
@@ -200,7 +200,7 @@ export default function Home() {
 
                     <div className={styles.fieldGroup}>
                         <button
-                            className={styles.input} // can reuse input style for simplicity - change later
+                            className={styles.button} // can reuse input style for simplicity - change later
                             type="button"
                             onClick={handleSearch}
                         >
@@ -209,16 +209,16 @@ export default function Home() {
                     </div>
                 </section>
 
-                <section className={styles.meta} aria-live="polite">
+                <section className={styles.search_summary} aria-label="Search summary" aria-live="polite">
                     <p>Most recently searched category:{' '} {recentCategory ? recentCategory : 'None'}</p>
 
                     {!loading && !error && results.length > 0 && (
                         <p>
-                            Showing {results.length} result{results.length === 1 ? '' : 's'} for{' '}
-                            <strong>{activeCategory}</strong>
+                            Showing {results.length} result{results.length === 1 ? '' : 's'} for:{' '}
+                            <span className={styles.italic}>{activeCategory}</span>
                             {activeSearch ? (
                                 <>
-                                    {' '}matching <strong>{activeSearch}</strong>
+                                    {' '}matching <span className={styles.italic}>{activeSearch}</span>
                                 </>
                             ) : (
                                 ' (all items)'
@@ -229,20 +229,20 @@ export default function Home() {
 
                 <section className={styles.results} aria-live="polite">
                     {loading ? (
-                        <div className={styles.loadingState}>
+                        <div className={styles.loading_state}>
                             <div className={styles.spinner} aria-hidden="true"></div>
                             <p className={styles.placeholder}>Loading search results...</p>
                         </div>
                     ) : error ? (
                         <p className={styles.error}>Error: {error}</p>
                     ) : results.length === 0 ? (
-                        <p className={styles.placeholder}>
+                        <p className={styles.result_placeholder}>
                             {hasSearched ? 'No results found for your search.' : 'Results will appear here.'}
                         </p>
                     ) : (
-                        <ul>
+                        <ul className={styles.result_list}>
                             {results.map((item: any, i) => (
-                                <li key={i}>
+                                <li key={i} className={styles.result_item}>
                                     {activeCategory === 'vehicles' || activeCategory === 'starships' ? (
                                         <TransportItem item={item} />
                                     ) : (
