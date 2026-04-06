@@ -82,6 +82,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
     This allows users to switch between categories without losing their previous search state.
 
 - Accessibility
+
 - ### Basic WCAG 2.2 A/AA considerations were included, such as:
     - labelled form controls
     - keyboard-friendly inputs
@@ -101,3 +102,7 @@ It was primarily used for:
 - code review / cleanup suggestions
 
 All code was reviewed, implemented and tested manually as part of the build process.
+
+## Public URL
+
+https://swapi-ochre.vercel.app/
