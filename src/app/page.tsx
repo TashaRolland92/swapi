@@ -1,12 +1,21 @@
 'use client';
 
 import styles from './page.module.css';
-import { isTransportCategory, sortResults, type SwapiItem, type TransportItemData } from './utils/swapi';
+import {
+    fetchAllResults,
+    isTransportCategory, 
+    isTransportItem,
+    sortResults, 
+    type CategoryOption, 
+    type SwapiItem, 
+    type TransportItemData,
+    type SortOption    
+} from './utils/swapi';
 import { useEffect, useState } from 'react';
 
 type CategoryState = {
     searchTerm: string;
-    sort: string;
+    sort: SortOption;
     results: SwapiItem[];
 };
 
@@ -27,47 +36,22 @@ const TransportItem = ({ item }: TransportProps) => (
     </ul>
 );
 
-// SWAPI paginates results, so this helper function fetches every page
-// to match the acceptance criteria of showing the full list of data.
-const fetchAllResults = async (
-    category: string,
-    searchTerm: string
-) => {
-    let allResults: SwapiItem[] = [];
-    let nextUrl = `https://swapi.dev/api/${category}/?search=${searchTerm}`;
-
-    while (nextUrl) {
-        const response = await fetch(nextUrl);
-
-        if (!response.ok) {
-            throw new Error('Failed to fetch Star Wars data');
-        }
-
-        const data = await response.json();
-
-        allResults = [...allResults, ...data.results];
-        nextUrl = data.next;
-    }
-
-    return allResults;
-};
-
 export default function Home() {
-    const [selectedCategory, setSelectedCategory] = useState<string>('people');
+    const [selectedCategory, setSelectedCategory] = useState<CategoryOption>('people');
     const [searchTerm, setSearchTerm] = useState<string>('');
-    const [selectedSort, setSelectedSort] = useState<string>('name');
+    const [selectedSort, setSelectedSort] = useState<SortOption>('name');
 
-    const [activeCategory, setActiveCategory] = useState<string>('people');
+    const [activeCategory, setActiveCategory] = useState<CategoryOption>('people');
     const [activeSearch, setActiveSearch] = useState<string>('');
-    const [activeSort, setActiveSort] = useState<string>('name');
+    const [activeSort, setActiveSort] = useState<SortOption>('name');
 
-    const [recentCategory, setRecentCategory] = useState<string | null>(null);
+    const [recentCategory, setRecentCategory] = useState<CategoryOption | null>(null);
     const [results, setResults] = useState<SwapiItem[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
 
     // Stores search term, sort option, and results per category - so users can switch categories without losing previous state.
-    const [savedCategoryState, setSavedCategoryState] = useState<Record<string, CategoryState>>({});
+    const [savedCategoryState, setSavedCategoryState] = useState<Partial<Record<CategoryOption, CategoryState>>>({});
     const [hasSearched, setHasSearched] = useState<boolean>(false);
 
     const handleSearch = async () => {
@@ -141,7 +125,7 @@ export default function Home() {
                             name="category"
                             className={styles.select}
                             value={selectedCategory}
-                            onChange={(e) => setSelectedCategory(e.target.value)}
+                            onChange={(e) => setSelectedCategory(e.target.value as CategoryOption)}
                         >
                             <option value="people">People</option>
                             <option value="planets">Planets</option>
@@ -172,7 +156,7 @@ export default function Home() {
                             name="sort"
                             className={styles.select}
                             value={selectedSort}
-                            onChange={(e) => setSelectedSort(e.target.value)}
+                            onChange={(e) => setSelectedSort(e.target.value as SortOption)}
                         >
                             <option value="name">Name / Title (A-Z)</option>
                             <option value="name-desc">Name / Title (Z-A)</option>
@@ -230,8 +214,8 @@ export default function Home() {
                         <ul className={styles.result_list}>
                             {results.map((item) => (
                                 <li key={item.url} className={styles.result_item}>
-                                    {isTransportCategory(activeCategory) ? (
-                                        <TransportItem item={item as TransportItemData} />
+                                    {isTransportCategory(activeCategory) && isTransportItem(item) ? (
+                                        <TransportItem item={item} />
                                     ) : (
                                         item.name || item.title
                                     )}
