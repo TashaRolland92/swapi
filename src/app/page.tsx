@@ -2,11 +2,12 @@
 
 import styles from './page.module.css';
 import {
+    fetchAllResults,
     isTransportCategory, 
     sortResults, 
     type SwapiItem, 
     type TransportItemData,
-    type SortOption
+    type SortOption    
 } from './utils/swapi';
 import { useEffect, useState } from 'react';
 
@@ -32,31 +33,6 @@ const TransportItem = ({ item }: TransportProps) => (
         <li><span className={styles.bold}>Cargo capacity:</span> {item.cargo_capacity}</li>
     </ul>
 );
-
-// SWAPI paginates results, so this helper function fetches every page
-// to match the acceptance criteria of showing the full list of data.
-const fetchAllResults = async (
-    category: string,
-    searchTerm: string
-) => {
-    let allResults: SwapiItem[] = [];
-    let nextUrl = `https://swapi.dev/api/${category}/?search=${searchTerm}`;
-
-    while (nextUrl) {
-        const response = await fetch(nextUrl);
-
-        if (!response.ok) {
-            throw new Error('Failed to fetch Star Wars data');
-        }
-
-        const data = await response.json();
-
-        allResults = [...allResults, ...data.results];
-        nextUrl = data.next;
-    }
-
-    return allResults;
-};
 
 export default function Home() {
     const [selectedCategory, setSelectedCategory] = useState<string>('people');

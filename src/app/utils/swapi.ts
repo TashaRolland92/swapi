@@ -36,3 +36,28 @@ export const sortResults = (
 export const isTransportCategory = (category: string): boolean => {
 	return category === 'vehicles' || category === 'starships';
 };
+
+// SWAPI paginates results, so this helper function fetches every page
+// to match the acceptance criteria of showing the full list of data.
+export const fetchAllResults = async (
+	category: string,
+	searchTerm: string
+): Promise<SwapiItem[]> => {
+	let allResults: SwapiItem[] = [];
+	let nextUrl = `https://swapi.dev/api/${category}/?search=${searchTerm}`;
+
+	while (nextUrl) {
+		const response = await fetch(nextUrl);
+
+		if (!response.ok) {
+			throw new Error('Failed to fetch Star Wars data');
+		}
+
+		const data = await response.json();
+
+		allResults = [...allResults, ...data.results];
+		nextUrl = data.next;
+	}
+
+	return allResults;
+};
