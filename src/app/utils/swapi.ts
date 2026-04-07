@@ -6,6 +6,14 @@ export type SwapiItem = {
 
 export type SortOption = 'name' | 'name-desc';
 
+export type CategoryOption =
+	| 'people'
+	| 'planets'
+	| 'films'
+	| 'species'
+	| 'starships'
+	| 'vehicles';
+
 export type TransportItemData = SwapiItem & {
 	name: string;
 	model: string;
@@ -40,7 +48,7 @@ export const isTransportCategory = (category: string): boolean => {
 // SWAPI paginates results, so this helper function fetches every page
 // to match the acceptance criteria of showing the full list of data.
 export const fetchAllResults = async (
-	category: string,
+	category: CategoryOption,
 	searchTerm: string
 ): Promise<SwapiItem[]> => {
 	let allResults: SwapiItem[] = [];

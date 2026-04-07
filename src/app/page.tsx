@@ -5,6 +5,7 @@ import {
     fetchAllResults,
     isTransportCategory, 
     sortResults, 
+    type CategoryOption, 
     type SwapiItem, 
     type TransportItemData,
     type SortOption    
@@ -35,15 +36,15 @@ const TransportItem = ({ item }: TransportProps) => (
 );
 
 export default function Home() {
-    const [selectedCategory, setSelectedCategory] = useState<string>('people');
+    const [selectedCategory, setSelectedCategory] = useState<CategoryOption>('people');
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [selectedSort, setSelectedSort] = useState<SortOption>('name');
 
-    const [activeCategory, setActiveCategory] = useState<string>('people');
+    const [activeCategory, setActiveCategory] = useState<CategoryOption>('people');
     const [activeSearch, setActiveSearch] = useState<string>('');
     const [activeSort, setActiveSort] = useState<SortOption>('name');
 
-    const [recentCategory, setRecentCategory] = useState<string | null>(null);
+    const [recentCategory, setRecentCategory] = useState<CategoryOption | null>(null);
     const [results, setResults] = useState<SwapiItem[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
@@ -123,7 +124,7 @@ export default function Home() {
                             name="category"
                             className={styles.select}
                             value={selectedCategory}
-                            onChange={(e) => setSelectedCategory(e.target.value)}
+                            onChange={(e) => setSelectedCategory(e.target.value as CategoryOption)}
                         >
                             <option value="people">People</option>
                             <option value="planets">Planets</option>
