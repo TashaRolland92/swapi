@@ -90,6 +90,26 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
     - semantic structure
     - visible focus states
 
+## Testing
+
+This project uses Vitest for unit testing.
+
+Unit tests have been added for core utility functions to ensure correct behaviour:
+
+- `sortResults`
+  - sorts results in ascending order (A–Z)
+  - sorts results in descending order (Z–A)
+- `isTransportCategory`
+  - correctly identifies transport-related categories (`vehicles`, `starships`)
+  - returns false for non-transport categories
+
+### Run tests
+
+To run the test suite:
+
+```bash
+npm test
+```
 
 ## AI Usage
 AI was used as a learning and support tool during development.
