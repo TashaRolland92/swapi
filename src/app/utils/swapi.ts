@@ -4,6 +4,8 @@ export type SwapiItem = {
 	title?: string;
 };
 
+export type SortOption = 'name' | 'name-desc';
+
 export type TransportItemData = SwapiItem & {
 	name: string;
 	model: string;
@@ -17,7 +19,7 @@ export type TransportItemData = SwapiItem & {
 
 export const sortResults = (
 	results: SwapiItem[],
-	sort: string
+	sort: SortOption
 ): SwapiItem[] => {
 	return [...results].sort((a, b) => {
 		const aValue = a.name || a.title || '';

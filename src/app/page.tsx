@@ -1,12 +1,18 @@
 'use client';
 
 import styles from './page.module.css';
-import { isTransportCategory, sortResults, type SwapiItem, type TransportItemData } from './utils/swapi';
+import {
+    isTransportCategory, 
+    sortResults, 
+    type SwapiItem, 
+    type TransportItemData,
+    type SortOption
+} from './utils/swapi';
 import { useEffect, useState } from 'react';
 
 type CategoryState = {
     searchTerm: string;
-    sort: string;
+    sort: SortOption;
     results: SwapiItem[];
 };
 
@@ -55,11 +61,11 @@ const fetchAllResults = async (
 export default function Home() {
     const [selectedCategory, setSelectedCategory] = useState<string>('people');
     const [searchTerm, setSearchTerm] = useState<string>('');
-    const [selectedSort, setSelectedSort] = useState<string>('name');
+    const [selectedSort, setSelectedSort] = useState<SortOption>('name');
 
     const [activeCategory, setActiveCategory] = useState<string>('people');
     const [activeSearch, setActiveSearch] = useState<string>('');
-    const [activeSort, setActiveSort] = useState<string>('name');
+    const [activeSort, setActiveSort] = useState<SortOption>('name');
 
     const [recentCategory, setRecentCategory] = useState<string | null>(null);
     const [results, setResults] = useState<SwapiItem[]>([]);
