@@ -1,29 +1,13 @@
 'use client';
 
 import styles from './page.module.css';
+import { isTransportCategory, sortResults, type SwapiItem, type TransportItemData } from './utils/swapi';
 import { useEffect, useState } from 'react';
 
 type CategoryState = {
     searchTerm: string;
     sort: string;
     results: SwapiItem[];
-};
-
-type SwapiItem = {
-    url: string;
-    name?: string;
-    title?: string;
-};
-
-type TransportItemData = SwapiItem & {
-    name: string;
-    model: string;
-    manufacturer: string;
-    cost_in_credits: string;
-    length: string;
-    crew: string;
-    passengers: string;
-    cargo_capacity: string;
 };
 
 type TransportProps = {
@@ -102,16 +86,7 @@ export default function Home() {
                 searchTerm
             );
 
-            const sortedResults = [...allResults].sort((a, b) => {
-                const aValue = a.name || a.title || '';
-                const bValue = b.name || b.title || '';
-
-                if (selectedSort === 'name') {
-                    return aValue.localeCompare(bValue);
-                }
-
-                return bValue.localeCompare(aValue);
-            });
+            const sortedResults = sortResults(allResults, selectedSort);
 
             setSavedCategoryState((prevState) => ({
                 ...prevState,
@@ -255,7 +230,7 @@ export default function Home() {
                         <ul className={styles.result_list}>
                             {results.map((item) => (
                                 <li key={item.url} className={styles.result_item}>
-                                    {activeCategory === 'vehicles' || activeCategory === 'starships' ? (
+                                    {isTransportCategory(activeCategory) ? (
                                         <TransportItem item={item as TransportItemData} />
                                     ) : (
                                         item.name || item.title
