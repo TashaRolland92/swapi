@@ -4,6 +4,7 @@ import styles from './page.module.css';
 import {
     fetchAllResults,
     isTransportCategory, 
+    isTransportItem,
     sortResults, 
     type CategoryOption, 
     type SwapiItem, 
@@ -50,7 +51,7 @@ export default function Home() {
     const [error, setError] = useState<string | null>(null);
 
     // Stores search term, sort option, and results per category - so users can switch categories without losing previous state.
-    const [savedCategoryState, setSavedCategoryState] = useState<Record<string, CategoryState>>({});
+    const [savedCategoryState, setSavedCategoryState] = useState<Partial<Record<CategoryOption, CategoryState>>>({});
     const [hasSearched, setHasSearched] = useState<boolean>(false);
 
     const handleSearch = async () => {
@@ -155,7 +156,7 @@ export default function Home() {
                             name="sort"
                             className={styles.select}
                             value={selectedSort}
-                            onChange={(e) => setSelectedSort(e.target.value)}
+                            onChange={(e) => setSelectedSort(e.target.value as SortOption)}
                         >
                             <option value="name">Name / Title (A-Z)</option>
                             <option value="name-desc">Name / Title (Z-A)</option>
@@ -213,8 +214,8 @@ export default function Home() {
                         <ul className={styles.result_list}>
                             {results.map((item) => (
                                 <li key={item.url} className={styles.result_item}>
-                                    {isTransportCategory(activeCategory) ? (
-                                        <TransportItem item={item as TransportItemData} />
+                                    {isTransportCategory(activeCategory) && isTransportItem(item) ? (
+                                        <TransportItem item={item} />
                                     ) : (
                                         item.name || item.title
                                     )}

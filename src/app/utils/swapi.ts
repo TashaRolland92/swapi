@@ -45,6 +45,19 @@ export const isTransportCategory = (category: string): boolean => {
 	return category === 'vehicles' || category === 'starships';
 };
 
+export const isTransportItem = (item: SwapiItem): item is TransportItemData => {
+	return (
+		typeof item.name === 'string' &&
+		typeof (item as Partial<TransportItemData>).model === 'string' &&
+		typeof (item as Partial<TransportItemData>).manufacturer === 'string' &&
+		typeof (item as Partial<TransportItemData>).cost_in_credits === 'string' &&
+		typeof (item as Partial<TransportItemData>).length === 'string' &&
+		typeof (item as Partial<TransportItemData>).crew === 'string' &&
+		typeof (item as Partial<TransportItemData>).passengers === 'string' &&
+		typeof (item as Partial<TransportItemData>).cargo_capacity === 'string'
+	);
+};
+
 // SWAPI paginates results, so this helper function fetches every page
 // to match the acceptance criteria of showing the full list of data.
 export const fetchAllResults = async (
