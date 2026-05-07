@@ -1,6 +1,6 @@
 'use client';
 
-import styles from './page.module.css';
+import styles from './page.module.scss';
 import {
     fetchAllResults,
     isTransportCategory, 
@@ -8,33 +8,18 @@ import {
     sortResults, 
     type CategoryOption, 
     type SwapiItem, 
-    type TransportItemData,
     type SortOption    
 } from './utils/swapi';
 import { useEffect, useState } from 'react';
+
+import TransportItem from '../components/TransportItem';
+import SearchControls from '../components/SearchControls';
 
 type CategoryState = {
     searchTerm: string;
     sort: SortOption;
     results: SwapiItem[];
 };
-
-type TransportProps = {
-    item: TransportItemData;
-};
-
-const TransportItem = ({ item }: TransportProps) => (
-    <ul className={styles.transport_item}>
-        <li><span className={styles.bold}>Name:</span> {item.name}</li>
-        <li><span className={styles.bold}>Model:</span> {item.model}</li>
-        <li><span className={styles.bold}>Manufacturer:</span> {item.manufacturer}</li>
-        <li><span className={styles.bold}>Cost:</span> {item.cost_in_credits}</li>
-        <li><span className={styles.bold}>Length:</span> {item.length}</li>
-        <li><span className={styles.bold}>Crew:</span> {item.crew}</li>
-        <li><span className={styles.bold}>Passengers:</span> {item.passengers}</li>
-        <li><span className={styles.bold}>Cargo capacity:</span> {item.cargo_capacity}</li>
-    </ul>
-);
 
 export default function Home() {
     const [selectedCategory, setSelectedCategory] = useState<CategoryOption>('people');
@@ -117,63 +102,16 @@ export default function Home() {
                     <p className={styles.description}>Search Star Wars data by category.</p>
                 </header>
 
-                <section className={styles.controls} aria-label="Search controls">
-                    <div className={styles.fieldGroup}>
-                        <label className={styles.label} htmlFor="category">Category</label>
-                        <select
-                            id="category"
-                            name="category"
-                            className={styles.select}
-                            value={selectedCategory}
-                            onChange={(e) => setSelectedCategory(e.target.value as CategoryOption)}
-                        >
-                            <option value="people">People</option>
-                            <option value="planets">Planets</option>
-                            <option value="films">Films</option>
-                            <option value="species">Species</option>
-                            <option value="starships">Starships</option>
-                            <option value="vehicles">Vehicles</option>
-                        </select>
-                    </div>
-
-                    <div className={styles.fieldGroup}>
-                        <label className={styles.label} htmlFor="search">Search</label>
-                        <input
-                            id="search"
-                            name="search"
-                            type="text"
-                            placeholder="Search by name or title"
-                            className={styles.input}
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                        />
-                    </div>
-
-                    <div className={styles.fieldGroup}>
-                        <label className={styles.label} htmlFor="sort">Sort by</label>
-                        <select
-                            id="sort"
-                            name="sort"
-                            className={styles.select}
-                            value={selectedSort}
-                            onChange={(e) => setSelectedSort(e.target.value as SortOption)}
-                        >
-                            <option value="name">Name / Title (A-Z)</option>
-                            <option value="name-desc">Name / Title (Z-A)</option>
-                        </select>
-                    </div>
-
-                    <div className={styles.fieldGroup}>
-                        <button
-                            className={styles.button} // can reuse input style for simplicity - change later
-                            type="button"
-                            onClick={handleSearch}
-                            disabled={loading}
-                        >
-                            {loading ? 'Searching...' : 'Search'}
-                        </button>
-                    </div>
-                </section>
+                <SearchControls 
+                    selectedCategory={selectedCategory}
+                    searchTerm={searchTerm} 
+                    selectedSort={selectedSort}
+                    loading={loading}
+                    setSelectedCategory={setSelectedCategory}
+                    setSearchTerm={setSearchTerm}
+                    setSelectedSort={setSelectedSort}
+                    handleSearch={handleSearch}                    
+                />
 
                 <section className={styles.search_summary} aria-label="Search summary" aria-live="polite">
                     <p>Most recently searched category:{' '} {recentCategory ? recentCategory : 'None'}</p>

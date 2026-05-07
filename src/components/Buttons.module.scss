@@ -1,0 +1,19 @@
+@use '../styles/variables' as *;
+
+.button {
+    cursor: pointer;
+    color: $bg;
+    background-color: $accent;
+    border: 1px solid $accent;
+    transition: background .2s ease-in;
+}
+
+.button:hover {
+    background-color: $accent-dark;
+    border-color: $accent-dark;
+}
+
+.button:focus {
+    outline: none;
+    border-color: $accent;
+}

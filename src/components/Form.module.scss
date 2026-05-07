@@ -1,0 +1,48 @@
+@use '../styles/variables' as *;
+
+.fieldGroup {
+    gap: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.label {
+    font-weight: 600;
+    color: $accent;
+}
+
+.input,
+.select,
+.button {
+    width: 100%;
+    color: $text;
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    background-color: $bg;
+    border: 1px solid $panel-border;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.input:focus,
+.select:focus {
+    outline: none;
+    border-color: $accent;
+    box-shadow: 0 0 0 3px rgba(255, 232, 31, 0.18);
+}
+
+.input::placeholder {
+    color: $text
+}
+
+.select {
+    appearance: none;
+    padding-right: 2.75rem;
+    background-image: linear-gradient(45deg, transparent 50%, $accent 50%),
+        linear-gradient(135deg, $accent 50%, transparent 50%);
+    background-position:
+        calc(100% - 20px) 50%,
+        calc(100% - 14px) 50%;
+    background-size: 6px 6px, 6px 6px;
+    background-repeat: no-repeat;
+}

@@ -1,0 +1,19 @@
+@use '../styles/variables' as *;
+@use '../styles/mixins' as *;
+
+.controls {
+    display: grid;
+    gap: 1rem;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    border-radius: 16px;
+    box-shadow: $shadow;
+    background-color: $panel;
+    border: 1px solid $panel-border;
+}
+
+@include tablet {
+    .controls {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}

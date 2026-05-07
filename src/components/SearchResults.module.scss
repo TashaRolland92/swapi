@@ -1,0 +1,24 @@
+@use '../styles/variables' as *;
+
+.result_placeholder {
+    color: $muted;
+}
+
+.results {
+    padding: 1.5rem;
+    border-radius: 16px;
+    box-shadow: $shadow;
+    background-color: $panel;
+    border: 1px solid $panel-border;
+}
+
+.results_heading {
+    font-size: 1.8rem;
+    color: $accent;
+    margin-bottom: 1.25rem;
+}
+
+.results>ul {
+    font-size: 1.6em;
+    margin-left: 1.5rem;
+}

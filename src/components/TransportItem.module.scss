@@ -1,0 +1,22 @@
+@use '../styles/variables' as *;
+@use '../styles/mixins' as *;
+
+.transport_item {
+    gap: 0.5rem;
+    display: grid;
+    padding: 1rem;
+    list-style: none;
+    margin-bottom: 1rem;
+    font-family: 'Arial', sans-serif;
+    
+    li {
+        margin: 0;
+        color: $text;
+    }
+}
+
+@include tablet {
+    .transport_item {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
